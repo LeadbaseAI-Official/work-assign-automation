@@ -194,6 +194,3 @@ def main():
     else:
         print("⏳ Script ran, but no task matched.")
 
-
-if __name__ == "__main__":
-    main()

@@ -1,0 +1,27 @@
+name: Morning Task Runner
+
+on:
+  schedule:
+    - cron: "30 3 * * *"  # Runs at 09:00 IST daily
+  workflow_dispatch:      # Optional: allows manual run
+
+jobs:
+  run-morning-task:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'  # Adjust to your Python version
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt  # Make sure you have a requirements.txt
+
+      - name: Run m2.py
+        run: python m2.py
