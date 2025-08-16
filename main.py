@@ -19,16 +19,11 @@ BASE = int(os.getenv("BASE", 10))
 INCREMENT = int(os.getenv("INCREMENT", 2))
 
 SLACK_TOKEN = os.getenv("SLACK_BOT_TOKEN")
-NOTION_TOKEN = os.getenv("NOTION_TOKEN")
-SHEET_ID = os.getenv("SHEET_ID")
 
 TEAM = os.getenv("TEAM", "Aakash,Priya,Rohit,Meena").split(",")
 
 # Init clients
 slack_client = WebClient(token=SLACK_TOKEN)
-notion = NotionClient(auth=NOTION_TOKEN)
-gc = gspread.service_account(filename="credentials.json")
-sheet = gc.open_by_key(SHEET_ID).sheet1
 
 
 # ===============================
