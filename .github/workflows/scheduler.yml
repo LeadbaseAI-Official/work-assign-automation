@@ -22,6 +22,14 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt  # Make sure you have a requirements.txt
+        
+        env:
+        SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        OUTREACH: ${{ secrets.OUTREACH }}
+
+
+      - name: Write service account JSON
+        run: echo "${{ secrets.GSPREAD_SERVICE_ACCOUNT }}" > service_account.json
 
       - name: Run m2.py
         run: python m2.py
