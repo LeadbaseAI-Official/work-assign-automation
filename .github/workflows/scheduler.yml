@@ -2,12 +2,15 @@ name: Morning Task Runner
 
 on:
   schedule:
-    - cron: "30 3 * * *"  # Runs at 09:00 IST daily
-  workflow_dispatch:      # Optional: allows manual run
+    - cron: "30 3 * * *"  # 09:00 IST daily (UTC+5:30 → 03:30 UTC)
+  workflow_dispatch:      # allows manual run
 
 jobs:
   run-morning-task:
     runs-on: ubuntu-latest
+    env:
+      SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      OUTREACH: ${{ secrets.OUTREACH }}
 
     steps:
       - name: Checkout repository
@@ -16,20 +19,16 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.11'  # Adjust to your Python version
+          python-version: '3.11'
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt  # Make sure you have a requirements.txt
-        
-        env:
-        SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-        OUTREACH: ${{ secrets.OUTREACH }}
-
+          pip install -r requirements.txt
 
       - name: Write service account JSON
-        run: echo "${{ secrets.GSPREAD_SERVICE_ACCOUNT }}" > service_account.json
+        run: |
+          echo "${{ secrets.GSPREAD_SERVICE_ACCOUNT }}" > service_account.json
 
       - name: Run m2.py
         run: python m2.py
